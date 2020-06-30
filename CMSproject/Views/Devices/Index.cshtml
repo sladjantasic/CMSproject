@@ -13,13 +13,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.IsConnected)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsConnected)
+                Change status
             </th>
             <th></th>
         </tr>
@@ -28,17 +31,24 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <vc:status device-id="@item.Id" />
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                <vc:status device-id="item.Id" />
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="@item.Id" asp-for="@item.IsConnected" onclick="location.href='@Url.Action("ToggleStatus", "Devices", new { id = item.Id } )'">
+                    <label class="custom-control-label" for="@item.Id"></label>
+                </div>
             </td>
             <td>
                 <a asp-action="Delete" asp-route-id="@item.Id">Remove device</a>
             </td>
+
         </tr>
 }
     </tbody>

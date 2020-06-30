@@ -166,5 +166,14 @@ namespace CMSproject.Controllers
         {
             return _context.Devices.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> ToggleStatus(int id)
+        {
+            var device = await _context.Devices.FirstOrDefaultAsync(e => e.Id == id);
+            device.IsConnected = !device.IsConnected;
+            _context.Update(device);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
