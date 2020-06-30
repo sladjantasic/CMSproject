@@ -30,6 +30,11 @@ namespace CMSproject.Controllers
         // GET: Devices
         public async Task<IActionResult> Index()
         {
+            if (userManager.GetUserAsync(User).Result.FirstName == null)
+            {
+                return Redirect("/Identity/Account/FirstLogin");
+            }
+                
             var viewModel = await mapper.ProjectTo<DeviceIndex>(_context.Devices).ToListAsync();
 
             return View(viewModel);
