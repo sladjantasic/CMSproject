@@ -7,23 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CMSproject.Data;
 using CMSproject.Models;
+using AutoMapper.QueryableExtensions;
+using AutoMapper;
+using CMSproject.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace CMSproject.Controllers
 {
     public class DevicesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
 
-        public DevicesController(ApplicationDbContext context)
+        public DevicesController(ApplicationDbContext context, IMapper mapper, UserManager<User> userManager)
         {
             _context = context;
+            this.mapper = mapper;
+            this.userManager = userManager;
         }
 
         // GET: Devices
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Devices.Include(d => d.User);
-            return View(await applicationDbContext.ToListAsync());
+            var viewModel = await mapper.ProjectTo<DeviceIndex>(_context.Devices).ToListAsync();
+
+            return View(viewModel);
         }
 
         // GET: Devices/Details/5
@@ -48,7 +57,6 @@ namespace CMSproject.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -57,16 +65,19 @@ namespace CMSproject.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,IsConnected,UserId")] Device device)
+        public async Task<IActionResult> Create(DeviceCreate viewModel)
         {
+            var model = mapper.Map<Device>(viewModel);
+            model.UserId = userManager.GetUserId(User);
+            model.IsConnected = false;
+
             if (ModelState.IsValid)
             {
-                _context.Add(device);
+                _context.Add(model);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", device.UserId);
-            return View(device);
+            return View(viewModel);
         }
 
         // GET: Devices/Edit/5
@@ -130,15 +141,14 @@ namespace CMSproject.Controllers
                 return NotFound();
             }
 
-            var device = await _context.Devices
-                .Include(d => d.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (device == null)
+            var model = await mapper.ProjectTo<DeviceRemove>(_context.Devices).FirstOrDefaultAsync(e => e.Id == id);
+
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(device);
+            return View(model);
         }
 
         // POST: Devices/Delete/5
