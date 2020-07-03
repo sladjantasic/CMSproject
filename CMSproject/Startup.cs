@@ -16,6 +16,7 @@ using CMSproject.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using CMSproject.Repositories;
 
 namespace CMSproject
 {
@@ -46,6 +47,8 @@ namespace CMSproject
 
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddScoped<IWorkUnit, WorkUnit>();
 
             services.AddRazorPages();
 
