@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSproject", "CMSproject\CMSproject.csproj", "{D9D185E6-E653-4B7D-BF3C-5BF80CE1760C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprojectTests", "CMSprojectTests\CMSprojectTests.csproj", "{581567EA-2B96-4ECC-BFA7-F3F80EC2155E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMSprojectTests", "CMSprojectTests\CMSprojectTests.csproj", "{581567EA-2B96-4ECC-BFA7-F3F80EC2155E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMSprojectAzure", "CMSprojectAzure\CMSprojectAzure.csproj", "{7417C229-E924-4AEF-8B75-DCA126A77949}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{581567EA-2B96-4ECC-BFA7-F3F80EC2155E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{581567EA-2B96-4ECC-BFA7-F3F80EC2155E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{581567EA-2B96-4ECC-BFA7-F3F80EC2155E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7417C229-E924-4AEF-8B75-DCA126A77949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7417C229-E924-4AEF-8B75-DCA126A77949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7417C229-E924-4AEF-8B75-DCA126A77949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7417C229-E924-4AEF-8B75-DCA126A77949}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
